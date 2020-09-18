@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import './App.css';
-
+import { GetInput } from './GetInput';
+import { ShowData } from './ShowData';
 
 function App() {
   const WEATHER_ID = process.env.REACT_APP_WEATHER_ID;
@@ -11,6 +9,8 @@ function App() {
   const CLIENT_SECRET= process.env.REACT_APP_WEATHER_CLIENT_SECRET;
 
   const [city, setCity ] = useState("");
+  const [weather, setWeather] = useState();
+
   let apiString = 'https://weather-ydn-yql.media.yahoo.com/forecastrss?location=';
   apiString += city;
   apiString += '&format=json';
@@ -44,35 +44,27 @@ const handleSubmit = () => {
         if (err) {
             console.log(err);
         } else {
-            console.log(data);
+            
             console.log(city);
+            const obj = JSON.parse(data);
+            console.log(obj);
+            //console.log(data);
+            setWeather(data);
         }
     }
-);
+  );
+  
 }
 
   return (
     <div className="App">
-      <InputGroup className="mb-3">
-    <InputGroup.Prepend>
-    <InputGroup.Text id="basic-addon1">Get the weather for your favorite city.</InputGroup.Text>
-    <br></br>
-      <InputGroup.Text id="basic-addon1">What city?</InputGroup.Text>
-    </InputGroup.Prepend>
-    <Form.Control
-      placeholder="What city?"
-      aria-label="What city?"
-      aria-describedby="basic-addon1"
-      onChange={handleChange}
-    />
-  </InputGroup>
-
-  <Button 
-    variant="primary"
-    onClick={handleSubmit}
-    >
-      Submit
-  </Button>
+      <GetInput 
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+      />
+      <ShowData 
+        weather={weather}
+      />
     </div>
   );
 }
