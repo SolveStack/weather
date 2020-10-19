@@ -9,7 +9,7 @@ function App() {
   const CLIENT_SECRET= process.env.REACT_APP_WEATHER_CLIENT_SECRET;
 
   const [city, setCity ] = useState("");
-  const [weather, setWeather] = useState();
+  const [weather, setWeather] = useState("");
 
   let apiString = 'https://weather-ydn-yql.media.yahoo.com/forecastrss?location=';
   apiString += city;
@@ -44,11 +44,8 @@ const handleSubmit = () => {
         if (err) {
             console.log(err);
         } else {
-            
             console.log(city);
-            const obj = JSON.parse(data);
-            console.log(obj);
-            //console.log(data);
+            console.log(data);
             setWeather(data);
         }
     }
